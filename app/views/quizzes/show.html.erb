@@ -11,11 +11,6 @@
         </a>
       </div>
 
-      <div>
-        <a href="/delete_quiz/<%= @the_quiz.id %>">
-          Delete quiz
-        </a>
-      </div>
     </div>
 
     <dl>
@@ -32,40 +27,26 @@
       <dd>
         <%= time_ago_in_words(@the_quiz.created_at) %> ago
       </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_quiz.updated_at) %> ago
-      </dd>
     </dl>
   </div>
 </div>
 
 <hr>
 
+<!--- list of existing messages --->
 
-<div>
+<!--- form for new message --->
+<form action="/insert_message" method="post">
+  <input type="hidden" id="quiz_id_box" name="query_quiz_id" value="<%= @the_quiz.id %>">
   <div>
-    <h2>
-      Edit quiz
-    </h2>
+    <label for="body_box">
+      Body
+    </label>
 
-    <form action="/modify_quiz/<%= @the_quiz.id %>"  method="post" >
-      <div>
-        <label for="topic_box">
-          Topic
-        </label>
-
-        <input type="text" id="topic_box" name="query_topic" value="<%= @the_quiz.topic %>">
-      </div>
-
-      <button>
-        Update quiz
-      </button>
-    </form>
+    <textarea id="body_box" name="query_body" rows="3"></textarea>
   </div>
-</div>
-
+  <button>
+    Create message
+  </button>
+</form>
 <hr>
