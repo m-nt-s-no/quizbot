@@ -45,6 +45,38 @@ class QuizzesController < ApplicationController
       first_user_msg.save
 
       #Call API to get first assistant message
+      require "openai"
+      require "dotenv/load"
+
+      client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY"))
+
+      #Prepare array of previous messages
+      message_list = [
+        {
+          "role" => "#{system_msg.role}",
+          "content" => "#{system_msg.body}"
+        },
+        {
+          "role" => "#{first_user_msg.role}",
+          "content" => "#{first_user_msg.body}"
+        }
+      ]
+
+      #Call API to get assistant message from ChatGPT
+      api_response = client.chat(
+        parameters: {
+          model: "gpt-3.5-turbo",
+          messages: message_list
+        }
+      )
+      assistant_msg_content = api_response.fetch("choices").at(0).fetch("message").fetch("content")
+
+      #Save assistant msg in quiz's messages
+      assistant_msg = Message.new
+      assistant_msg.quiz_id = @the_quiz.id
+      assistant_msg.role = "assistant"
+      assistant_msg.body = assistant_msg_content
+      assistant_msg.save
 
       redirect_to("/quizzes/#{@the_quiz.id}", { :notice => "Quiz created successfully." })
     else
