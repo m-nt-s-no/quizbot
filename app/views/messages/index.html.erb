@@ -1,0 +1,118 @@
+<div>
+  <div>
+    <h1>
+      List of all messages
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new message
+    </h2>
+
+    <form action="/insert_message" method="post">
+      <div>
+        <label for="quiz_id_box">
+          Quiz
+        </label>
+
+        <input type="text" id="quiz_id_box" name="query_quiz_id">
+      </div>
+
+      <div>
+        <label for="body_box">
+          Body
+        </label>
+
+        <textarea id="body_box" name="query_body" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label for="role_box">
+          Role
+        </label>
+
+        <input type="text" id="role_box" name="query_role">
+      </div>
+
+      <button>
+        Create message
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Quiz
+        </th>
+
+        <th>
+          Body
+        </th>
+
+        <th>
+          Role
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_messages.each do |a_message| %>
+      <tr>
+        <td>
+          <%= a_message.id %>
+        </td>
+
+        <td>
+          <%= a_message.quiz_id %>
+        </td>
+
+        <td>
+          <%= a_message.body %>
+        </td>
+
+        <td>
+          <%= a_message.role %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_message.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_message.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/messages/<%= a_message.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

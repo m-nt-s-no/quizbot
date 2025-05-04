@@ -1,0 +1,101 @@
+<div>
+  <div>
+    <h1>
+      Message #<%= @the_message.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/messages">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_message/<%= @the_message.id %>">
+          Delete message
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Quiz
+      </dt>
+      <dd>
+        <%= @the_message.quiz_id %>
+      </dd>
+
+      <dt>
+        Body
+      </dt>
+      <dd>
+        <%= @the_message.body %>
+      </dd>
+
+      <dt>
+        Role
+      </dt>
+      <dd>
+        <%= @the_message.role %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_message.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_message.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit message
+    </h2>
+
+    <form action="/modify_message/<%= @the_message.id %>"  method="post" >
+      <div>
+        <label for="quiz_id_box">
+          Quiz
+        </label>
+
+        <input type="text" id="quiz_id_box" name="query_quiz_id" value="<%= @the_message.quiz_id %>">
+      </div>
+
+      <div>
+        <label for="body_box">
+          Body
+        </label>
+
+        <textarea id="body_box" name="query_body"><%= @the_message.body %></textarea>
+      </div>
+
+      <div>
+        <label for="role_box">
+          Role
+        </label>
+
+        <input type="text" id="role_box" name="query_role" value="<%= @the_message.role %>">
+      </div>
+
+      <button>
+        Update message
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
