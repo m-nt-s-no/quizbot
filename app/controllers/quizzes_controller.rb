@@ -65,7 +65,7 @@ class QuizzesController < ApplicationController
       #Call API to get assistant message from ChatGPT
       api_response = client.chat(
         parameters: {
-          model: "gpt-3.5-turbo",
+          model: "gpt-4o",
           messages: message_list
         }
       )
