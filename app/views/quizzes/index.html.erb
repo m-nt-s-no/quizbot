@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      List of all quizzes
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new quiz
+    </h2>
+
+    <form action="/insert_quiz" method="post">
+      <div>
+        <label for="topic_box">
+          Topic
+        </label>
+
+        <input type="text" id="topic_box" name="query_topic">
+      </div>
+
+      <button>
+        Create quiz
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Topic
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_quizzes.each do |a_quiz| %>
+      <tr>
+        <td>
+          <%= a_quiz.id %>
+        </td>
+
+        <td>
+          <%= a_quiz.topic %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_quiz.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_quiz.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/quizzes/<%= a_quiz.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
