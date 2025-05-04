@@ -10,4 +10,8 @@
 #  quiz_id    :integer
 #
 class Message < ApplicationRecord
+  belongs_to :quiz
+  validates :role, inclusion: { in: [ "system", "user", "assistant" ] }
+  validates :role, presence: true
+  validates :body, presence: true
 end
