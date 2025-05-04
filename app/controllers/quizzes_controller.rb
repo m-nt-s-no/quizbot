@@ -18,14 +18,37 @@ class QuizzesController < ApplicationController
   end
 
   def create
-    the_quiz = Quiz.new
-    the_quiz.topic = params.fetch("query_topic")
+    @the_quiz = Quiz.new
+    @the_quiz.topic = params.fetch("query_topic")
 
-    if the_quiz.valid?
-      the_quiz.save
-      redirect_to("/quizzes", { :notice => "Quiz created successfully." })
+    if @the_quiz.valid?
+      @the_quiz.save
+
+      #Create system message
+      system_msg = Message.new
+      system_msg.quiz_id = @the_quiz.id
+      system_msg.role = "system"
+      system_msg.body = "You are a #{@the_quiz.topic} tutor. 
+          Ask the user five questions to assess their #{@the_quiz.topic}
+          proficiency. Start with an easy question. After each answer,
+          increase or decrease  the difficulty of the next question
+          based on how well the user answered. 
+          
+          In the end, provide a score between 0 and 10."
+      system_msg.save
+
+      #Create first user message
+      first_user_msg = Message.new
+      first_user_msg.quiz_id = @the_quiz.id
+      first_user_msg.role = "user"
+      first_user_msg.body = "Can you assess my #{@the_quiz.topic} proficiency?"
+      first_user_msg.save
+
+      #Call API to get first assistant message
+
+      redirect_to("/quizzes/#{@the_quiz.id}", { :notice => "Quiz created successfully." })
     else
-      redirect_to("/quizzes", { :alert => the_quiz.errors.full_messages.to_sentence })
+      redirect_to("/quizzes/#{@the_quiz.id}", { :alert => the_quiz.errors.full_messages.to_sentence })
     end
   end
 

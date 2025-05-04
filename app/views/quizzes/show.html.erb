@@ -64,6 +64,7 @@ api_response = client.chat(
 <%= api_response %>
 
 <!--- list of existing messages --->
+<h2>Message history</h2>
 <dl>
   <% @the_quiz.messages.order(:created_at).each do |message| %>
     <dt><%= message.role %></dt>
